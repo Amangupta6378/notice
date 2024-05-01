@@ -1,0 +1,34 @@
+.animals{
+    border: 1px solid rgba(0, 0, 0, 0);
+    margin: 10px;
+    width: 320px;
+    border-radius: 10px;
+    
+}
+.animalName{
+    color: rgb(156, 13, 13);
+    text-align: center;
+}
+.btn{
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: rgb(122, 122, 199);
+    border: 0;
+    padding: 5px;
+    text-decoration: none;
+   
+}
+.btn-box{
+    display: flex;
+    justify-content: center;
+}
+.productImage{
+    border-radius: 10px;
+    margin: auto;
+    object-fit: contain;
+}
+.about{
+    text-align: justify;
+    color: rgba(0, 0, 0, 0.681);
+}

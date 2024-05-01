@@ -1,0 +1,132 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .sidebar{
+    width: 20%;
+    height: 100vh;
+    position: relative;
+    top: 20px;
+    left: 0px;
+    background-color: rgb(255, 255, 255);
+    padding: 0;
+    margin: 0;
+    align-items: left;
+    box-shadow: 1px 1px 4px #888888ba;
+  }
+  .sidebarList{
+    text-align:left;
+    padding: 0;
+  }
+  .sidebarList-row{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    color: rgb(54, 54, 54);
+    padding: 10px;
+    /* border: 1px solid ; */
+    /* margin-left: 20px; */
+    justify-content: start;
+  }
+  .sidebarList-row:hover{
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
+  }
+  
+  .row #icon{
+    flex: 30%;
+    display: grid;
+    place-items: center;
+  }
+  .row #title{
+    flex: 70%;
+    display: grid;
+    font-weight: 500;
+    
+    /* place-items: center; */
+  }
+  .sidebarList #active{
+    background-color: rgb(55, 80, 206);
+    color: white;
+  }
+  .items{
+    /* width: 100px; */
+    /* height: min-content; */
+    font-weight: 500;
+    text-align: left;
+    
+    /* height: 80px; */
+  }
+  .para2{
+    font-size: 12px;
+    /* width: 90px; */
+  }
+  .para3{
+    font-size: 13px;
+    color: green;
+  }
+  .chart{
+    border: 1px solid black;
+  }
+  .mainbox31{
+    text-align: left;
+    
+  }
+  p{
+    margin: 0 !important;
+  }
+  .mainbox31 p{
+    font-size: 13px;
+    font-weight: 400;
+    color: gray;
+  }
+  .mainbox31-button{
+    font-size: 12px;
+    padding: 5px 3px;
+  }
+  p{
+    margin: 0;
+  }
+  /* .main-main{
+    z-index: -1;
+    scroll
+  } */
