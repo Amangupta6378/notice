@@ -1,29 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
 
 const Login = () => {
-  //   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    // console.log(setEmail);
   };
+
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    // console.log(setPassword);
   };
+
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
-    
     e.preventDefault(); // Prevent the default form submission
     if (email && password) {
       try {
@@ -31,27 +25,25 @@ const Login = () => {
           "http://localhost:5036/api/v1/login",
           { email, password }
         );
+
         if (response.data.user.role === "teacher") {
-          navigate("/teacher")
+          navigate("/teacher");
+        } else if (response.data.user.role === "student") {
+          navigate("/student");
+        } else if (response.data.user.role === "Admin") {
+          navigate("/admin");
+        } else {
+          alert("Role not recognized");
         }
-        if (response.data.user.role === "student") {
-          navigate("/student")
-        }
-        if (response.data.user.role === "Admin") {
-          navigate("/admin")
-        }
+
         if (response.status === 200) {
-          // handleLogin(response.data); // Pass the user data to handleLogin
-          // toast.success("Login successful");
-          // navigate("/home");
-          console.log("successfully logged in.");
-        }
-        else{
-          alert("incorrect username or password")
-          console.log("password or username is incorrect")
+          console.log("Successfully logged in.");
+        } else {
+          alert("Incorrect username or password");
+          console.log("Password or username is incorrect");
         }
       } catch (err) {
-        console.error(err);
+        console.error("Error:", err.response || err.message);
         console.error("Login failed");
       }
     } else {
@@ -74,7 +66,7 @@ const Login = () => {
               autoComplete="off"
               name="email"
               value={email}
-              onChange={(e) => handleEmail(e)}
+              onChange={handleEmail}
               className="form-control rounded-0"
             />
           </div>
@@ -84,12 +76,12 @@ const Login = () => {
               <strong>Password</strong>
             </label>
             <input
-              type="text"
+              type="password"
               placeholder="Enter Password"
               autoComplete="off"
               name="password"
               value={password}
-              onChange={(e) => handlePassword(e)}
+              onChange={handlePassword}
               className="form-control rounded-0"
             />
           </div>
@@ -98,9 +90,7 @@ const Login = () => {
             className="btn btn-border border-1 bg-danger text-white"
             onClick={handleSubmit}
           >
-            
-              Login
-           
+            Login
           </button>
         </form>
       </div>

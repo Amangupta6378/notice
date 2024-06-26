@@ -32,7 +32,10 @@ require('./config/Database').connect();
 
 //middleware
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Frontend URL
+}));
 
 //Routes
 const route = require('./routes/notice')
@@ -49,3 +52,7 @@ app.get("/aman", (req, res)=>{
     res.send(`Server is running on ${PORT} port.`)
 })
 
+app.post('/api/v1/signup', (req, res) => {
+    // Your signup logic here
+    res.status(200).send({ message: 'Signup successful' });
+  });

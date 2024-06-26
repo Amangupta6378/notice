@@ -3,10 +3,6 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify"
-// import { Accordion, AccordionItem } from "react-accessible-accordion";
-import BasicExample from "./Accordion";
-// import "react-accessible-accordion/dist/fancy-example.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,51 +10,47 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [batch, setBatch] = useState("");
-  //   const [data,setData] = useState({})
+  const [error, setError] = useState(null);
 
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleBatch = (e) => {
-    setBatch(e.target.value);
-  };
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleName = (e) => setName(e.target.value);
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleBatch = (e) => setBatch(e.target.value);
 
   const handleClick = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
-    const signData = { name, email, password, batch }; // Create an object with the form data
-
+    e.preventDefault();
+    const signData = { name, email, password, batch };
     try {
       const response = await axios.post(
-        "http://localhost:5036/api/v1/signup", // Update the URL to match your backend server endpoint
+        "http://localhost:5036/api/v1/signup",
         signData
       );
-
       console.log(response);
-      navigate("/login");
-
       if (response.status === 200) {
-        // Handle successful signup
         console.log("Signup successful");
-
-        // You can add further actions like displaying a success message or redirecting the user
+        navigate("/login");
       } else {
         console.log("Signup failed with status:", response.status);
-        // Handle other status codes if needed
+        setError(`Signup failed with status: ${response.status}`);
       }
-      // toast.success("user register successfully");
     } catch (error) {
       console.error("Error occurred during signup:", error);
-
-      // toast.error(error, "Not registered");
-      // Handle specific error cases here based on error response
-      // For example, check error.response.data for detailed error messages from server
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+        setError(
+          `Signup failed: ${
+            error.response.data.message || error.response.statusText
+          }`
+        );
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+        setError("No response received from server. Please try again later.");
+      } else {
+        console.error("Error message:", error.message);
+        setError(`An error occurred: ${error.message}`);
+      }
     }
   };
 
@@ -66,9 +58,10 @@ const Signup = () => {
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div className="bg-white p-3 rounded w-25">
         <h2>Signup</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
         <form>
           <div className="mb-3">
-            <label htmlFor="email">
+            <label htmlFor="name">
               <strong>Name</strong>
             </label>
             <input
@@ -81,14 +74,13 @@ const Signup = () => {
               className="form-control rounded-0"
             />
           </div>
-
           <div className="mb-3">
             <label htmlFor="email">
               <strong>Email</strong>
             </label>
             <input
               type="email"
-              placeholder="email"
+              placeholder="Email"
               autoComplete="off"
               name="email"
               value={email}
@@ -96,13 +88,12 @@ const Signup = () => {
               className="form-control rounded-0"
             />
           </div>
-
           <div className="mb-3">
-            <label htmlFor="email">
+            <label htmlFor="password">
               <strong>Password</strong>
             </label>
             <input
-              type="password" // Changed to password type for security reasons
+              type="password"
               placeholder="Enter Password"
               autoComplete="off"
               name="password"
@@ -111,34 +102,34 @@ const Signup = () => {
               className="form-control rounded-0"
             />
           </div>
-
-          <select
-            onChange={handleBatch}
-            name="role"
-            value={batch}
-            id="countries_disabled"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option selected>Choose your Batch</option>
-            <option value="Super60">Super60</option>
-            <option value="The Uniques">Uniques 1.0</option>
-            <option value="academics">Uniques 2.0</option>
-          </select>
-
+          <div className="mb-3">
+            <label htmlFor="batch">
+              <strong>Batch</strong>
+            </label>
+            <select
+              onChange={handleBatch}
+              name="batch"
+              value={batch}
+              id="batch"
+              className="form-control"
+            >
+              <option value="">Choose your Batch</option>
+              <option value="Super60">Super60</option>
+              <option value="Uniques 1.0">Uniques 1.0</option>
+              <option value="Uniques 2.0">Uniques 2.0</option>
+              <option value="The Uniques">The Uniques</option>
+            </select>
+          </div>
           <button
-            type="button" // Changed to button type to prevent form submission
+            type="button"
             onClick={handleClick}
-            className="btn btn-border border-1 bg-danger text-white mt-3"
+            className="btn btn-border border-1 bg-danger text-white mt-3 w-100"
           >
             Sign Up
           </button>
-
-          <div className="bg-white mt-3 rounded w-100">
-            <Link
-              to="/login"
-              className=" text-black text-decoration-none"
-            >
-              Already have an account
+          <div className="mt-3">
+            <Link to="/login" className="text-black text-decoration-none">
+              Already have an account? Log in
             </Link>
           </div>
         </form>

@@ -4,12 +4,23 @@ const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
   try {
-    //get data
+    console.log("Incoming request data:", req.body);
+
+    // Validate data
+    // const { error } = signupSchema.validate(req.body);
+    // if (error) {
+    //   console.error("Validation error:", error.details[0].message);
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: error.details[0].message,
+    //   });
+    // }
+
+    // Get data
     const { name, password, email, role, batch } = req.body;
 
-    // Check if user is already exist.
+    // Check if user already exists
     const existingUser = await UserSchema.findOne({ email });
-
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -17,37 +28,31 @@ exports.signup = async (req, res) => {
       });
     }
 
-    //Secure password
+    // Secure password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 10);
-    } catch (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Error in hashing password.",
-      });
-    }
-
-    // Create Entry for user
+    // Create entry for user
     const user = await UserSchema.create({
       name,
       email,
       password: hashedPassword,
-      role: "student",
+      role:"student",
       batch,
     });
+
     return res.status(200).json({
       success: true,
-      message: "User Created Successfully.",
+      message: "User created successfully.",
     });
   } catch (err) {
+    console.error("Error in signup:", err);
     return res.status(500).json({
       success: false,
-      message: "User can not registered please try again later.",
+      message: "User cannot be registered, please try again later.",
     });
   }
 };
+
 
 exports.login = async (req, res) => {
   try {

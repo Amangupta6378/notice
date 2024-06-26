@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import image2 from "../Images/WhatsApp Image 2024-04-22 at 22.34.59_a04b678f.jpg";
-import { toPng } from "html-to-image";
+import { toPng, toJpeg } from "html-to-image";
 import download from "downloadjs";
 import { Link } from "react-router-dom";
 
@@ -26,13 +26,13 @@ const Letter = () => {
   }
 
 
-//   function buttonDownload() {
-//     toJpeg(node)
-//       .then((dataURL) => {
-//         download(dataURL, "notice.jpg");
-//       })
-//       .catch(() => console.log("error"));
-//   }
+  function buttonDownload() {
+    toJpeg(node)
+      .then((dataURL) => {
+        download(dataURL, "notice.jpg");
+      })
+      .catch(() => console.log("error"));
+  }
 
   
   return (
